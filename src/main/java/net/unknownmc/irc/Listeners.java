@@ -39,4 +39,10 @@ public class Listeners implements Listener {
         if (!main.getConfig().getBoolean("actions.chat") || e.isCancelled()) return;
         main.bot.sendMessageToIRC("[CHAT] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
     }
+
+    @EventHandler
+    public void muted(AsyncPlayerChatEvent e) {
+        if (!main.getConfig().getBoolean("actions.muted") || e.getFormat().equalsIgnoreCase("abc")) return; // The abc part is for one of my private plugins. Remove in forks
+        main.bot.sendMessageToIRC("[MUTED] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
+    }
 }

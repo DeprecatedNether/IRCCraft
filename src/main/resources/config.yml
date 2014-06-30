@@ -8,3 +8,4 @@ actions:
   leave: true
   chat: true
   kick: true
+  muted: true
