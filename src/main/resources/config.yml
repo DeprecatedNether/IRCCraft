@@ -3,6 +3,7 @@ irc:
   port: 6667
   password: IRCBot:supersecurepassword
   channel: #mysuperawesomeserver
+  chanserv-invite: false
 actions:
   join: true
   leave: true

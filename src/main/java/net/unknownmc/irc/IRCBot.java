@@ -26,6 +26,10 @@ public class IRCBot extends BukkitRunnable {
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
             this.writer.write("PASS " + pass + "\r\n");
+            if (main.getConfig().getBoolean("irc.chanserv-invite")) {
+                this.writer.write("PRIVMSG ChanServ :INVITE " + channel);
+                this.writer.flush();
+            }
             this.writer.write("JOIN " + channel + "\r\n");
             this.writer.flush();
             this.connected = true;
