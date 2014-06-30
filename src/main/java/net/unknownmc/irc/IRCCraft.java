@@ -9,6 +9,7 @@ public class IRCCraft extends JavaPlugin {
         saveDefaultConfig();
         this.bot = new IRCBot(this, getConfig().getString("irc.hostname"), getConfig().getInt("irc.port"), getConfig().getString("irc.password"), getConfig().getString("irc.channel"));
         this.bot.runTaskAsynchronously(this);
+        this.getServer().getPluginManager().registerEvents(new Listeners(this), this);
     }
 
     public void onDisable() {
