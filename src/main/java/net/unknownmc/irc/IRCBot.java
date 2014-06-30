@@ -15,10 +15,11 @@ public class IRCBot extends BukkitRunnable {
     boolean connected;
 
     /**
-     * Establishes a connection to an IRC server. This should be a ZNC bouncer (the plugin will make no attempts to set a nickname etc.)
+     * Establishes a connection to an IRC server.
      * @param hostname The hostname
      * @param port The port
      * @param pass The password to authenticate to ZNC with ("username:password")
+     * @param channel The channel to join
      */
     public void connectToIRC(String hostname, int port, String pass, String channel) {
         try {
@@ -26,8 +27,10 @@ public class IRCBot extends BukkitRunnable {
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
             this.writer.write("PASS " + pass + "\r\n");
+            this.writer.write("USER irccraft +b * :IRCCraft\r\n");
+            this.writer.write("NICK " + main.getConfig().getString("irc.nickname") + "\r\n");
             if (main.getConfig().getBoolean("irc.chanserv-invite")) {
-                this.writer.write("PRIVMSG ChanServ :INVITE " + channel);
+                this.writer.write("PRIVMSG ChanServ :INVITE " + channel + "\r\n");
                 this.writer.flush();
             }
             this.writer.write("JOIN " + channel + "\r\n");

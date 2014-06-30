@@ -1,4 +1,5 @@
 irc:
+  nickname: IRCCraft
   hostname: bouncer.something.com
   port: 6667
   password: IRCBot:supersecurepassword
