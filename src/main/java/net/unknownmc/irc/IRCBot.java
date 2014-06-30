@@ -12,6 +12,7 @@ public class IRCBot extends BukkitRunnable {
     BufferedReader reader;
     BufferedWriter writer;
     String channel;
+    boolean connected;
 
     /**
      * Establishes a connection to an IRC server. This should be a ZNC bouncer (the plugin will make no attempts to set a nickname etc.)
@@ -27,6 +28,7 @@ public class IRCBot extends BukkitRunnable {
             this.writer.write("PASS " + pass + "\r\n");
             this.writer.write("JOIN " + channel + "\r\n");
             this.writer.flush();
+            this.connected = true;
             // We have identified and may now start the loop in run()
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -38,7 +40,7 @@ public class IRCBot extends BukkitRunnable {
      * @param message The message to send
      */
     public void sendMessageToIRC(String message) {
-        if (socket == null) {
+        if (socket == null || !this.connected) {
             main.getLogger().severe("Discarding IRC message: " + message);
             return;
         }
@@ -51,11 +53,15 @@ public class IRCBot extends BukkitRunnable {
         }
     }
 
+    public void disconnect() {
+        this.connected = false;
+    }
+
     @Override
     public void run() {
         String ln;
         try {
-            while ((ln = this.reader.readLine()) != null) {
+            while ((ln = this.reader.readLine()) != null && this.connected) {
                 if (ln.toLowerCase().startsWith("ping")) { // Respond to pings
                     this.writer.write("PONG " + ln.substring(5) + "\r\n");
                     this.writer.flush();
