@@ -47,7 +47,17 @@ public class IRCBot extends BukkitRunnable {
 
     @Override
     public void run() {
-
+        String ln;
+        try {
+            while ((ln = this.reader.readLine()) != null) {
+                if (ln.toLowerCase().startsWith("ping")) { // Respond to pings
+                    this.writer.write("PONG " + ln.substring(5) + "\r\n");
+                    this.writer.flush();
+                }
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     public IRCBot(IRCCraft plugin, String hostname, int port, String pass, String channel) {
