@@ -59,6 +59,9 @@ public class IRCBot extends BukkitRunnable {
 
     @Override
     public void run() {
+        if (this.socket == null) {
+            return;
+        }
         String ln;
         try {
             while ((ln = this.reader.readLine()) != null && this.connected) {
