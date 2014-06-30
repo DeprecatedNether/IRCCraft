@@ -11,6 +11,7 @@ public class IRCCraft extends JavaPlugin {
     }
 
     public void onDisable() {
-
+        bot.disconnect();
+        bot.cancel(); // Just in case the above failed
     }
 }
