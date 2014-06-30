@@ -1,0 +1,3 @@
+name: IRCCraft
+version: ${project.version}
+main: net.unknownmc.irc.IRCCraft
