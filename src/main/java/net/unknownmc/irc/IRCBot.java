@@ -42,7 +42,13 @@ public class IRCBot extends BukkitRunnable {
             main.getLogger().severe("Discarding IRC message: " + message);
             return;
         }
-
+        try {
+            this.writer.write("PRIVMSG " + this.channel + " :" + message + "\r\n");
+            this.writer.flush();
+        } catch (IOException ioe) {
+            main.getLogger().severe("Discarding IRC message: " + message);
+            ioe.printStackTrace();
+        }
     }
 
     @Override
