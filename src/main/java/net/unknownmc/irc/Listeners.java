@@ -24,7 +24,7 @@ public class Listeners implements Listener {
 
     @EventHandler
     public void leave(PlayerQuitEvent e) {
-        if (!main.getConfig().getBoolean("actions.quit")) return;
+        if (!main.getConfig().getBoolean("actions.leave")) return;
         main.bot.sendMessageToIRC("[QUIT] " + e.getPlayer().getName());
     }
 
@@ -40,9 +40,9 @@ public class Listeners implements Listener {
         main.bot.sendMessageToIRC("[CHAT] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
     }
 
-    @EventHandler
+    @EventHandler (ignoreCancelled = true)
     public void muted(AsyncPlayerChatEvent e) {
-        if (!main.getConfig().getBoolean("actions.muted") || e.getFormat().equalsIgnoreCase("abc")) return; // The abc part is for one of my private plugins. Remove in forks
+        if (!main.getConfig().getBoolean("actions.muted") || e.getFormat().equalsIgnoreCase("abc") || !e.isCancelled()) return; // The abc part is for one of my private plugins. Remove in forks
         main.bot.sendMessageToIRC("[MUTED] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
     }
 }
