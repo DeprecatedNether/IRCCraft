@@ -11,3 +11,5 @@ actions:
   chat: true
   kick: true
   muted: true
+commands:
+  modreq: "A ModReq has been submitted!"

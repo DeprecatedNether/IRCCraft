@@ -3,10 +3,7 @@ package net.unknownmc.irc;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 public class Listeners implements Listener {
 
@@ -44,5 +41,13 @@ public class Listeners implements Listener {
     public void muted(AsyncPlayerChatEvent e) {
         if (!main.getConfig().getBoolean("actions.muted") || e.getFormat().equalsIgnoreCase("abc") || !e.isCancelled()) return; // The abc part is for one of my private plugins. Remove in forks
         main.bot.sendMessageToIRC("[MUTED] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
+    }
+
+    @EventHandler
+    public void command(PlayerCommandPreprocessEvent e) {
+        String cmd = e.getMessage().split(" ")[0].substring(1);
+        if (main.getConfig().isString("commands." + cmd)) {
+            main.bot.sendMessageToIRC(main.getConfig().getString("commands." + cmd));
+        }
     }
 }
