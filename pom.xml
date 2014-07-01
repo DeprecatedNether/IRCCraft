@@ -45,6 +45,20 @@
             <artifactId>bukkit</artifactId>
             <version>LATEST</version>
         </dependency>
+        <dependency>
+            <groupId>net.unknownmc.antiadvertiser</groupId>
+            <artifactId>AntiAdvertiser</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/AntiAdvertiser.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.unknownmc.mc.chat</groupId>
+            <artifactId>UnknownChat</artifactId>
+            <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/UnknownChat.jar</systemPath>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

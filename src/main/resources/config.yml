@@ -12,5 +12,7 @@ actions:
   kick: true
   muted: true
   signs: false
+  antiadvertiser: false
+  unknownchat: false
 commands:
   modreq: "{player} submitted a ModReq: {cmd}"
