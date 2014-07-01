@@ -3,6 +3,7 @@ package net.unknownmc.irc;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.*;
 
 public class Listeners implements Listener {
@@ -51,5 +52,11 @@ public class Listeners implements Listener {
         if (main.getConfig().isString("commands." + cmd)) {
             bot.sendMessageToIRC(main.getConfig().getString("commands." + cmd).replace("{cmd}", e.getMessage()).replace("{player}", e.getPlayer().getName()));
         }
+    }
+
+    @EventHandler
+    public void sign(SignChangeEvent e) {
+        if (!main.getConfig().getBoolean("actions.signs")) return;
+        bot.sendMessageToIRC("[SIGN] " + e.getPlayer().getName() + ": " + e.getLine(0) + " " + e.getLine(1) + " " + e.getLine(2) + " " + e.getLine(3));
     }
 }
