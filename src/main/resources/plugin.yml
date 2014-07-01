@@ -1,3 +1,4 @@
 name: IRCCraft
 version: ${project.version}
 main: net.unknownmc.irc.IRCCraft
+softdepend: [AntiAdvertiser, UnknownChat]
