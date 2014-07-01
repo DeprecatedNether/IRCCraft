@@ -47,7 +47,7 @@ public class Listeners implements Listener {
     public void command(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().split(" ")[0].substring(1);
         if (main.getConfig().isString("commands." + cmd)) {
-            main.bot.sendMessageToIRC(main.getConfig().getString("commands." + cmd));
+            main.bot.sendMessageToIRC(main.getConfig().getString("commands." + cmd).replace("{cmd}", e.getMessage()).replace("{player}", e.getPlayer().getName()));
         }
     }
 }

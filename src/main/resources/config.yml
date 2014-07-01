@@ -12,4 +12,4 @@ actions:
   kick: true
   muted: true
 commands:
-  modreq: "A ModReq has been submitted!"
+  modreq: "{player} submitted a ModReq: {cmd}"
