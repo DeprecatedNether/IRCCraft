@@ -83,6 +83,10 @@ public class IRCBot extends BukkitRunnable {
     }
 
     public IRCBot(IRCCraft plugin, String hostname, int port, String pass, String channel) {
+        if (!channel.startsWith("#")) {
+            plugin.getLogger().severe("That channel is invalid (" + channel + ")");
+            return;
+        }
         this.main = plugin;
         this.channel = channel;
         connectToIRC(hostname, port, pass, channel);

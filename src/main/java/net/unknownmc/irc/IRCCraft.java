@@ -15,11 +15,17 @@ public class IRCCraft extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new Listeners(this), this);
         Plugin antiadvertiser = getServer().getPluginManager().getPlugin("AntiAdvertiser");
         if (antiadvertiser != null && antiadvertiser.isEnabled() && getConfig().getBoolean("actions.antiadvertiser")) {
+            getLogger().info("Enabling AntiAdvertiser listener");
             getServer().getPluginManager().registerEvents(new AntiAdvertiser(this), this);
+        } else {
+            getLogger().info("AntiAdvertiser listener is disabled");
         }
         Plugin unknownchat = getServer().getPluginManager().getPlugin("UnknownChat");
         if (unknownchat!= null && unknownchat.isEnabled() && getConfig().getBoolean("actions.unknownchat")) {
+            getLogger().info("Enabling UnknownChat listener");
             getServer().getPluginManager().registerEvents(new UnknownChat(this), this);
+        } else {
+            getLogger().info("UnknownChat listener is disabled");
         }
     }
 
