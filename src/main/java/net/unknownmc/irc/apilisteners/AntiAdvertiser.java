@@ -19,6 +19,6 @@ public class AntiAdvertiser implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void advertise(PlayerAdvertiseEvent e) {
-        bot.sendMessageToIRC("[AntiAdvertiser] " + e.getPlayer() + " advertised using " + e.getType().toString().toLowerCase() + ": " + e.getMessage());
+        bot.sendMessageToIRC("[AntiAdvertiser] " + e.getPlayer().getName() + " advertised using " + e.getType().toString().toLowerCase() + ": " + e.getMessage());
     }
 }
