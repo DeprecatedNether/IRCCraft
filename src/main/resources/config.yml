@@ -3,7 +3,7 @@ irc:
   hostname: bouncer.something.com
   port: 6667
   password: IRCBot:supersecurepassword
-  channel: #mysuperawesomeserver
+  channel: "#mysuperawesomeserver"
   chanserv-invite: false
 actions:
   join: true
