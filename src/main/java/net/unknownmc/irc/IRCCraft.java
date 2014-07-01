@@ -3,7 +3,7 @@ package net.unknownmc.irc;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class IRCCraft extends JavaPlugin {
-    public IRCBot bot;
+    private IRCBot bot;
 
     public void onEnable() {
         saveDefaultConfig();
@@ -15,5 +15,13 @@ public class IRCCraft extends JavaPlugin {
     public void onDisable() {
         bot.disconnect();
         bot.cancel(); // Just in case the above failed
+    }
+
+    /**
+     * Gets the instance of IRCBot.
+     * @return
+     */
+    public IRCBot getIRCBot() {
+        return bot;
     }
 }
