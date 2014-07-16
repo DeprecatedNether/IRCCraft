@@ -41,7 +41,7 @@ public class Listeners implements Listener {
         bot.sendMessageToIRC("[CHAT] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
     }
 
-    @EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR)
+    @EventHandler (priority = EventPriority.MONITOR)
     public void muted(AsyncPlayerChatEvent e) {
         if (!main.getConfig().getBoolean("actions.muted") || e.getFormat().equalsIgnoreCase("abc") || !e.isCancelled()) return; // The abc part is for one of my private plugins. Remove in forks
         bot.sendMessageToIRC("[MUTED] " + e.getPlayer().getName() + ": " + ChatColor.stripColor(e.getMessage()));
