@@ -1,8 +1,8 @@
 irc:
   nickname: IRCCraft
-  hostname: bouncer.something.com
+  hostname: irc.esper.net
   port: 6667
-  password: IRCBot:supersecurepassword
+  password: ""
   channel: "#mysuperawesomeserver"
   chanserv-invite: false
 actions:
