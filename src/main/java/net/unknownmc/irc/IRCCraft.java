@@ -41,4 +41,10 @@ public class IRCCraft extends JavaPlugin {
     public IRCBot getIRCBot() {
         return bot;
     }
+
+    public void sendDebug(String message) {
+        if (getConfig().getBoolean("debug")) {
+            getLogger().info("[DEBUG] " + message);
+        }
+    }
 }
