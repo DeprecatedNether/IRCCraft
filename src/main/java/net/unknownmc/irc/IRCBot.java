@@ -59,6 +59,7 @@ public class IRCBot extends BukkitRunnable {
     }
 
     public void disconnect() {
+        sendMessageToIRC("The plugin is being unloaded.");
         this.connected = false;
     }
 
