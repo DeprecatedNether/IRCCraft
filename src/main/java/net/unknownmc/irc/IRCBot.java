@@ -99,7 +99,7 @@ public class IRCBot extends BukkitRunnable {
 
     private void processIncomingMessage(String raw) {
         if (!raw.startsWith(":")) return;
-        String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
+        final String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
         String[] split1 = info[0].split(" "); // [0] -> user info; [1] -> action (privmsg); [2] -> channel name
         if (split1.length != 3 || !split1[1].equalsIgnoreCase("privmsg")) return;
         String[] split2 = info[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
@@ -138,5 +138,22 @@ public class IRCBot extends BukkitRunnable {
             }
             sendMessageToIRC(nick + ": Unknown command.");
          }
+
+        if (message.startsWith("!")) { // command from console
+            if (permission < 2) {
+                sendMessageToIRC(nick + ": You are not authorized to use this command.");
+                return;
+            }
+            final String command = message.substring(1);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    main.getLogger().info(info[0] + " issued console command: " + command); // nick!~ident@hostname
+                    main.getServer().dispatchCommand(main.getServer().getConsoleSender(), command);
+                }
+            }.runTask(main);
+            sendMessageToIRC(nick + ": Issued command '" + command + "'");
+            return;
+        }
     }
 }
