@@ -120,12 +120,24 @@ public class IRCBot extends BukkitRunnable {
         String channel = split1[2];
         final String message = info[1];
 
-        if (!channel.equals(this.channel)) return;
-        if (!main.getConfig().contains("irc-users." + nick)) return; // User not authorized, ignore message
+        if (!channel.equals(this.channel)) {
+            main.sendDebug("Ignoring incoming message - incorrect channel.");
+            return;
+        }
+        if (!main.getConfig().contains("irc-users." + nick)) {
+            main.sendDebug("Ignoring incoming message - user not authorized");
+            return;
+        }
         String requiredIdent = main.getConfig().getString("irc-users." + nick + ".ident");
-        if (requiredIdent != null && !requiredIdent.equals(ident)) return; // ident is required by the config, but the sender's ident doesn't match
+        if (requiredIdent != null && !requiredIdent.equals(ident)) {
+            main.sendDebug("Ignoring incoming message - idents do not match (expected " + requiredIdent + " but got " + ident + ").");
+            return;
+        }
         String requiredHostname = main.getConfig().getString("irc-users." + nick + ".hostname");
-        if (requiredHostname != null && !requiredHostname.equals(hostname)) return; // hostname is required by the config, but the sender's hostname doesn't match
+        if (requiredHostname != null && !requiredHostname.equals(hostname)) {
+            main.sendDebug("Ignoring incoming message - hostnames do not match (expected " + requiredHostname + " but got " + hostname + ").");
+            return; // hostname is required by the config, but the sender's hostname doesn't match
+        }
         int permission = main.getConfig().getInt("irc-users." + nick + ".permission-level");
 
         if (message.startsWith("?")) { // passive
