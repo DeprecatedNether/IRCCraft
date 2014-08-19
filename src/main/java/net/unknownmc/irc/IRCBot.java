@@ -59,7 +59,13 @@ public class IRCBot extends BukkitRunnable {
     }
 
     public void disconnect() {
-        sendMessageToIRC("The plugin is being unloaded.");
+        try {
+            this.writer.write("PRIVMSG " + this.channel + " : The plugin is being unloaded, disconnecting (server restart?)");
+            this.writer.write("QUIT :Plugin unloaded");
+            this.writer.flush();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
         this.connected = false;
     }
 
