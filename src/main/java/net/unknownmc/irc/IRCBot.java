@@ -77,6 +77,8 @@ public class IRCBot extends BukkitRunnable {
                     this.writer.write("JOIN " + channel + "\r\n");
                     this.writer.flush();
                     joined = true;
+                } else {
+                    processIncomingMessage(ln);
                 }
             }
         } catch (IOException ioe) {
@@ -92,5 +94,28 @@ public class IRCBot extends BukkitRunnable {
         this.main = plugin;
         this.channel = channel;
         connectToIRC(hostname, port, pass, channel);
+    }
+
+    private void processIncomingMessage(String raw) {
+        if (!raw.startsWith(":")) return;
+        String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
+        String[] split1 = info[0].split(" "); // [0] -> user info; [1] -> action (privmsg); [2] -> channel name
+        if (split1.length != 3 || !split1[1].equalsIgnoreCase("privmsg")) return;
+        String[] split2 = info[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
+        String[] split3 = split1[1].substring(1).split("@"); // [0] -> ident; [1] -> hostname
+
+        String nick = split2[0];
+        String ident = split3[0];
+        String hostname = split3[1];
+        String channel = split1[2];
+        String message = info[1];
+
+        if (!main.getConfig().contains("irc-users." + nick)) return; // User not authorized, ignore message
+        String requiredIdent = main.getConfig().getString("irc-users." + nick + ".ident");
+        if (requiredIdent != null && !requiredIdent.equals(ident)) return; // ident is required by the config, but the sender's ident doesn't match
+        String requiredHostname = main.getConfig().getString("irc-users." + nick + ".hostname");
+        if (requiredHostname != null && !requiredHostname.equals(hostname)) return; // hostname is required by the config, but the sender's hostname doesn't match
+
+
     }
 }
