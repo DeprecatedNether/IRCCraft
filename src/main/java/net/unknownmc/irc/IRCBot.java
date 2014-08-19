@@ -1,5 +1,6 @@
 package net.unknownmc.irc;
 
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.*;
@@ -116,7 +117,26 @@ public class IRCBot extends BukkitRunnable {
         if (requiredIdent != null && !requiredIdent.equals(ident)) return; // ident is required by the config, but the sender's ident doesn't match
         String requiredHostname = main.getConfig().getString("irc-users." + nick + ".hostname");
         if (requiredHostname != null && !requiredHostname.equals(hostname)) return; // hostname is required by the config, but the sender's hostname doesn't match
+        int permission = main.getConfig().getInt("irc-users." + nick + ".permission-level");
 
-
+        if (message.startsWith("?")) { // passive
+            if (permission < 0) { // why'd you set it to -1 though?
+                sendMessageToIRC(nick + ": You are not authorized to use this command.");
+                return;
+            }
+            String[] args = message.substring(1).split(" ");
+            if (args[0].equalsIgnoreCase("list")) {
+                String players = "";
+                for (Player player : main.getServer().getOnlinePlayers()) {
+                    if (players.length() != 0) {
+                        players = players + ", ";
+                    }
+                    players = players + player.getName();
+                }
+                sendMessageToIRC(nick + ": Currently online: " + players + ".");
+                return;
+            }
+            sendMessageToIRC(nick + ": Unknown command.");
+         }
     }
 }
