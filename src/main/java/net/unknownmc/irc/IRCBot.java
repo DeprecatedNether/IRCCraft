@@ -165,6 +165,7 @@ public class IRCBot extends BukkitRunnable {
                 return;
             }
             sendMessageToIRC(nick + ": Unknown command.");
+            return;
          }
 
         if (message.startsWith("!")) { // command from console
