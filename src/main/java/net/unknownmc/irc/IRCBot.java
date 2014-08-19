@@ -110,6 +110,7 @@ public class IRCBot extends BukkitRunnable {
         String channel = split1[2];
         String message = info[1];
 
+        if (!channel.equals(this.channel)) return;
         if (!main.getConfig().contains("irc-users." + nick)) return; // User not authorized, ignore message
         String requiredIdent = main.getConfig().getString("irc-users." + nick + ".ident");
         if (requiredIdent != null && !requiredIdent.equals(ident)) return; // ident is required by the config, but the sender's ident doesn't match
