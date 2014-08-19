@@ -28,7 +28,8 @@ public class IRCBot extends BukkitRunnable {
             this.socket = new Socket(hostname, port);
             this.reader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.writer = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-            this.writer.write("PASS " + pass + "\r\n");
+            if (pass != null && !pass.equals(""))
+                this.writer.write("PASS " + pass + "\r\n");
             this.writer.write("USER irccraft +b * :IRCCraft\r\n");
             this.writer.write("NICK " + main.getConfig().getString("irc.nickname") + "\r\n");
             if (main.getConfig().getBoolean("irc.chanserv-invite")) {
