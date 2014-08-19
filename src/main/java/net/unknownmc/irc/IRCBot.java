@@ -115,8 +115,8 @@ public class IRCBot extends BukkitRunnable {
 
     private void processIncomingMessage(String raw) {
         if (!raw.startsWith(":")) return;
-        final String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
-        String[] split1 = info[0].split(" "); // [0] -> user info; [1] -> action (privmsg); [2] -> channel name
+        String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
+        final String[] split1 = info[0].split(" "); // [0] -> user info; [1] -> action (privmsg); [2] -> channel name
         if (split1.length != 3 || !split1[1].equalsIgnoreCase("privmsg")) return;
         String[] split2 = split1[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
         String[] split3 = split2[1].substring(1).split("@"); // [0] -> ident; [1] -> hostname
@@ -176,7 +176,7 @@ public class IRCBot extends BukkitRunnable {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    main.getLogger().info(info[0] + " issued console command: " + command); // nick!~ident@hostname
+                    main.getLogger().info(split1[0] + " issued console command: " + command); // nick!~ident@hostname
                     main.getServer().dispatchCommand(main.getServer().getConsoleSender(), command);
                 }
             }.runTask(main);
@@ -194,7 +194,7 @@ public class IRCBot extends BukkitRunnable {
                 for (Player player : main.getServer().getOnlinePlayers()) {
                     player.sendMessage(ChatColor.DARK_AQUA + "[IRC] " + ChatColor.AQUA + nick + ChatColor.WHITE + ": " + message);
                 }
-                main.getLogger().info(info[0] + " broadcast: " + message);
+                main.getLogger().info(split1[0] + " broadcast: " + message);
             }
         }.runTask(main);
         sendMessageToIRC(nick + ": Broadcast message '" + message + "' to all online players.");
