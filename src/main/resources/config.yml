@@ -16,3 +16,8 @@ actions:
   unknownchat: false
 commands:
   modreq: "{player} submitted a ModReq: {cmd}"
+irc-users:
+  DeprecatedNether:
+    ident: nether
+    hostname: deprecatednether.pw
+    permission-level: 2
