@@ -32,6 +32,7 @@ public class IRCBot extends BukkitRunnable {
                 this.writer.write("PASS " + pass + "\r\n");
             this.writer.write("USER irccraft +b * :IRCCraft\r\n");
             this.writer.write("NICK " + main.getConfig().getString("irc.nickname") + "\r\n");
+            this.writer.flush();
             this.connected = true;
             // We have identified and may now start the loop in run()
         } catch (IOException ioe) {
