@@ -1,5 +1,6 @@
 package net.unknownmc.irc;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -105,11 +106,11 @@ public class IRCBot extends BukkitRunnable {
         String[] split2 = info[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
         String[] split3 = split1[1].substring(1).split("@"); // [0] -> ident; [1] -> hostname
 
-        String nick = split2[0];
+        final String nick = split2[0];
         String ident = split3[0];
         String hostname = split3[1];
         String channel = split1[2];
-        String message = info[1];
+        final String message = info[1];
 
         if (!channel.equals(this.channel)) return;
         if (!main.getConfig().contains("irc-users." + nick)) return; // User not authorized, ignore message
@@ -155,5 +156,20 @@ public class IRCBot extends BukkitRunnable {
             sendMessageToIRC(nick + ": Issued command '" + command + "'");
             return;
         }
+
+        if (permission < 1) {
+            sendMessageToIRC(nick + ": You are not authorized to broadcast messages from IRC.");
+            return;
+        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player player : main.getServer().getOnlinePlayers()) {
+                    player.sendMessage(ChatColor.DARK_AQUA + "[IRC] " + ChatColor.AQUA + nick + ChatColor.WHITE + ": " + message);
+                }
+                main.getLogger().info(info[0] + " broadcast: " + message);
+            }
+        }.runTask(main);
+        sendMessageToIRC(nick + ": Broadcast message '" + message + "' to all online players.");
     }
 }
