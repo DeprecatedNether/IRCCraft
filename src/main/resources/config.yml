@@ -21,3 +21,4 @@ irc-users:
     ident: nether
     hostname: deprecatednether.pw
     permission-level: 2
+debug: false

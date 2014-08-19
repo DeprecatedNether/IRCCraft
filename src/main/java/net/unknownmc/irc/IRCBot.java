@@ -54,6 +54,9 @@ public class IRCBot extends BukkitRunnable {
         }
         try {
             this.writer.write("PRIVMSG " + this.channel + " :" + message + "\r\n");
+            if (main.getConfig().getBoolean("debug")) {
+                main.getLogger().info("PRIVMSG " + this.channel + " :" + message);
+            }
             this.writer.flush();
         } catch (IOException ioe) {
             main.getLogger().severe("Discarding IRC message: '" + message + "', reason: " + ioe.getMessage());
@@ -73,6 +76,9 @@ public class IRCBot extends BukkitRunnable {
         try {
             boolean joined = false;
             while ((ln = this.reader.readLine()) != null && this.connected) {
+                if (main.getConfig().getBoolean("debug")) {
+                    main.getLogger().info(ln);
+                }
                 if (ln.toLowerCase().startsWith("ping")) { // Respond to pings
                     this.writer.write("PONG " + ln.substring(5) + "\r\n");
                     this.writer.flush();
