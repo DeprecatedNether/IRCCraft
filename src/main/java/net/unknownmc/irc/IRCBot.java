@@ -32,10 +32,6 @@ public class IRCBot extends BukkitRunnable {
                 this.writer.write("PASS " + pass + "\r\n");
             this.writer.write("USER irccraft +b * :IRCCraft\r\n");
             this.writer.write("NICK " + main.getConfig().getString("irc.nickname") + "\r\n");
-            if (main.getConfig().getBoolean("irc.chanserv-invite")) {
-                this.writer.write("PRIVMSG ChanServ :INVITE " + channel + "\r\n");
-                this.writer.flush();
-            }
             this.connected = true;
             // We have identified and may now start the loop in run()
         } catch (IOException ioe) {
@@ -83,6 +79,10 @@ public class IRCBot extends BukkitRunnable {
                     this.writer.write("PONG " + ln.substring(5) + "\r\n");
                     this.writer.flush();
                 } else if (!joined && ln.contains("376")) {
+                    if (main.getConfig().getBoolean("irc.chanserv-invite")) {
+                        this.writer.write("PRIVMSG ChanServ :INVITE " + channel + "\r\n");
+                        this.writer.flush();
+                    }
                     this.writer.write("JOIN " + channel + "\r\n");
                     this.writer.flush();
                     joined = true;
