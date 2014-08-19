@@ -111,7 +111,7 @@ public class IRCBot extends BukkitRunnable {
         final String[] info = raw.substring(1).split(" :"); // [0] ->  message details; [1] -> message
         String[] split1 = info[0].split(" "); // [0] -> user info; [1] -> action (privmsg); [2] -> channel name
         if (split1.length != 3 || !split1[1].equalsIgnoreCase("privmsg")) return;
-        String[] split2 = info[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
+        String[] split2 = split1[0].split("!"); // [0] -> nickname; [1] -> ~ident@hostname
         String[] split3 = split2[1].substring(1).split("@"); // [0] -> ident; [1] -> hostname
 
         final String nick = split2[0];
