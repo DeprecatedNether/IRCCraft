@@ -79,6 +79,10 @@ public class IRCBot extends BukkitRunnable {
                     this.writer.write("PONG " + ln.substring(5) + "\r\n");
                     this.writer.flush();
                 } else if (!joined && ln.contains("376")) {
+                    if (main.getConfig().getString("irc.nickserv-password") != null && !main.getConfig().getString("irc.nickserv-password").equals("")) {
+                        this.writer.write("PRIVMSG NICKSERV :IDENTIFY " + main.getConfig().getString("irc.nickserv-password") + "\r\n");
+                        this.writer.flush();
+                    }
                     if (main.getConfig().getBoolean("irc.chanserv-invite")) {
                         this.writer.write("PRIVMSG ChanServ :INVITE " + channel + "\r\n");
                         this.writer.flush();

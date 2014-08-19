@@ -5,6 +5,7 @@ irc:
   password: ""
   channel: "#mysuperawesomeserver"
   chanserv-invite: false
+  nickserv-password: ''
 actions:
   join: true
   leave: true
